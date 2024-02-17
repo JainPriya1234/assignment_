@@ -17,7 +17,7 @@ Institute Instructor Attendance System
 - `/signup` For creating New Instructor
 - `/login` For login the instructor and authenticating them.
 - `/instructor/checkin`  for checkin the instructor
-- `/instructor/checkin` for checkout the instructor
+- `/instructor/checkout` for checkout the instructor
 - `/instructor/report/:year/:month` For generating the report of the instructor 
 
 
