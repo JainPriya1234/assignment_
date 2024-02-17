@@ -14,7 +14,7 @@ const login = async(req,res,next) =>{
     }
 
     // creating  JWT Token 
-    const token = await instructor.generateJWT();
+    const token = instructor.generateJWT();
 
     res.status(200).json(sendSuccessApiResponse({ "token": token }));
    }

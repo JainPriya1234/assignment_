@@ -8,11 +8,12 @@ const dayTableSchema = new mongoose.Schema({
     },
     date:{
         type: Date,
-        default: () => moment.utc().tz("Asia/Kolkata").toDate()
+        default: () => moment.utc().tz("Asia/Kolkata").format('YYYY-MM-DD')
         // This will set the default date to the current date in Indian Standard Time (IST)
     },
     totalTime:{
-        type: Number
+        type: Number,
+        default:0
     }
 });
 

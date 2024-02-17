@@ -1,22 +1,17 @@
 const mongoose = require("mongoose")
+const moment = require("moment-timezone");
 
 const timeSchema = new mongoose.Schema({
-    instructorId:{
-        type:mongoose.Types.ObjectId,
-        ref:"instructor"
-    },
     dayId:{
         type:mongoose.Types.ObjectId,
         ref:"dayTable"
     }, 
-    //TODO : DATE VALIDATOR
-    CheckIn:{
+    checkIn:{
         type: String,
-        default: null  
+        required :[true,"Plase Give Check-In Time"]
     },
     checkOut:{
-        type: Date,
-        default: null
+        type: String,
     }
 });
 

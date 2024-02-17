@@ -34,7 +34,7 @@ app.use(express.json());
 
 app.use(router);
 
-// // Error handling
+// Error handling
 app.use(errorHandler)
 app.use(notFound);
 

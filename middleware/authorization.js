@@ -1,7 +1,7 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const { createCustomError } =  require("../errors/customAPIError");
-const User =  require("../model/user");
+const Instructor = require('./../model/instructor')
 
 
 const authorization = async (req, res, next) => {
@@ -14,12 +14,12 @@ const authorization = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
     try {
         const payload =await jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.find(u => u.username === payload.username && u.type===payload.type)
-        if (!user) {
+        const instructor =await Instructor.findById(payload.instructorId)
+        if (!instructor) {
             return next(createCustomError("Invalid JWT",401));
         }
         else{
-            req.user = { username: payload.username, type: payload.type };
+            req.instructor = { id: payload.instructorId };
         }
         next();
     } catch (error) {
