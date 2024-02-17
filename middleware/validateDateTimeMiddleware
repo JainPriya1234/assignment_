@@ -1,0 +1,27 @@
+const moment = require('moment-timezone');
+const { createCustomError } = require('../errors/customAPIError');
+const { sendSuccessApiResponse } = require('../middleware/successApiResponse');
+
+const validateDateTimeMiddleware = (req, res, next) => {
+    const { checkInTime, date } = req.body;
+
+    if (!checkInTime || !date) {
+        return next(createCustomError("Check-in time and date are required.", 400));
+    }
+
+    if (!moment(`${date} ${checkInTime}`, 'YYYY-MM-DD HH:mm', true).isValid()) {
+        return next(createCustomError("Invalid date or time format.", 400));
+    }
+
+    const userDateTime = moment.tz(`${date} ${checkInTime}`, 'YYYY-MM-DD HH:mm', 'Asia/Kolkata');
+
+    if (userDateTime.isSameOrBefore(moment.tz('Asia/Kolkata'))) {
+        return next(createCustomError("Invalid check-in time. Please provide a time in the future.", 400));
+    }
+
+    // Store the user's datetime in Indian Standard Time (IST)
+    req.userDateTime = userDateTime.toDate(); // Convert moment object to JavaScript Date object
+    next();
+};
+
+module.exports = { validateDateTimeMiddleware };
